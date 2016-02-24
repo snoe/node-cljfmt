@@ -1,0 +1,22 @@
+{
+  "name": "node-cljfmt",
+  "version": "0.4.0",
+  "description": "A node script that reformats a file to proper clojure formatting",
+  "bin": {
+    "cljfmt": "bin/cljfmt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/snoe/node-cljfmt.git"
+  },
+  "keywords": [
+    "clojure",
+    "tool"
+  ],
+  "author": "Case Nelson",
+  "license": "EPL",
+  "bugs": {
+    "url": "https://github.com/snoe/node-cljfmt/issues"
+  },
+  "homepage": "https://github.com/snoe/node-cljfmt#readme"
+}
