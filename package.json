@@ -1,6 +1,6 @@
 {
   "name": "node-cljfmt",
-  "version": "0.4.1",
+  "version": "0.4.1-1",
   "description": "A node script that reformats a file to proper clojure formatting",
   "bin": {
     "cljfmt": "bin/cljfmt"
