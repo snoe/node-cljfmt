@@ -9,9 +9,13 @@
 
 (def fs (nodejs/require "fs"))
 
+(def known-option? #{:edn})
+
 (defn parse-arg [parsed arg]
   (if (.startsWith arg "--")
-    (let [[opt v] (string/split (subs arg 2) #"=" 2)]
+    (let [[opt-str v] (string/split (subs arg 2) #"=" 2)
+          opt         (keyword opt-str)]
+      (assert (known-option? opt) (str "Unknown option " opt))
       (assoc-in parsed [:opts opt] v))
     (assoc parsed :filename arg)))
 
@@ -32,7 +36,7 @@
   (let [parsed (parse-args (aget js/process "argv"))]
     (if-let [filename (:filename parsed)]
       (let [file ((aget fs "readFileSync") filename "utf8")
-            opts (edn-opts (get-in parsed [:opts "edn"]))
+            opts (edn-opts (get-in parsed [:opts :edn]))
             formatted (cljfmt/reformat-string file opts)]
         ((aget fs "writeFileSync") filename formatted "utf8"))
       (js/console.error "Provide a filename"))))
