@@ -22,7 +22,6 @@
 (defn parse-args [argv]
   (loop [[arg & args] (drop 2 argv)
          parsed {}]
-    (js/console.log "arg: " arg "args:" (pr-str args) "parsed: " (pr-str opts))
     (if arg
       (recur args (parse-arg parsed arg))
       parsed)))
