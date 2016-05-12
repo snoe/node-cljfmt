@@ -1,2 +1,3 @@
-{:remove-surrounding-whitespace? false}
+{:remove-surrounding-whitespace? false
+ :indents {#"^dom\/.+" [[:inner 0]]}}
 
