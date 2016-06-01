@@ -13,6 +13,7 @@ npm install -g node-cljfmt`
 ```
 cljfmt <filename>
 cljfmt --edn=<options.edn> <filename>
+cat <filename> | cljfmt --edn=<options.edn>
 ```
 
 options.edn is an optional file containing a map of cljfmt options as laid out here: https://github.com/weavejester/cljfmt#configuration
