@@ -28,16 +28,25 @@
 
 (defn edn-opts [edn-filename]
   (if edn-filename
-   (reader/read-string ((aget fs "readFileSync") edn-filename "utf8"))
-   {}))
+    (reader/read-string ((aget fs "readFileSync") edn-filename "utf8"))
+    {}))
+
+(defn stdin-read [opts]
+  (let [stdin (aget js/process "stdin")
+        content (atom "")]
+    (.call (aget stdin "setEncoding") stdin "utf8")
+    (.call (aget stdin "on") stdin "readable" (fn [] (if-let [s (.call (aget stdin "read") stdin)] (swap! content str s))))
+    (.call (aget stdin "on") stdin "end" (fn []
+                                           (let [formatted (cljfmt/reformat-string @content opts)]
+                                             (.log js/console formatted))))))
 
 (defn -main []
-  (let [parsed (parse-args (aget js/process "argv"))]
+  (let [parsed (parse-args (aget js/process "argv"))
+        opts (edn-opts (get-in parsed [:opts :edn]))]
     (if-let [filename (:filename parsed)]
       (let [file ((aget fs "readFileSync") filename "utf8")
-            opts (edn-opts (get-in parsed [:opts :edn]))
             formatted (cljfmt/reformat-string file opts)]
         ((aget fs "writeFileSync") filename formatted "utf8"))
-      (js/console.error "Provide a filename"))))
+      (stdin-read opts))))
 
 (set! *main-cli-fn* -main)
