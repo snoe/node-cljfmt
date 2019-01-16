@@ -37,8 +37,12 @@
     (.call (aget stdin "setEncoding") stdin "utf8")
     (.call (aget stdin "on") stdin "readable" (fn [] (if-let [s (.call (aget stdin "read") stdin)] (swap! content str s))))
     (.call (aget stdin "on") stdin "end" (fn []
-                                           (let [formatted (cljfmt/reformat-string @content opts)]
-                                             (.log js/console formatted))))))
+                                           (try
+                                             (let [formatted (cljfmt/reformat-string @content opts)]
+                                               (.log js/console formatted)) s
+                                             (catch :default e
+                                               (.log js/console @content)
+                                               (.error js/console e)))))))
 
 (defn -main []
   (let [parsed (parse-args (aget js/process "argv"))
