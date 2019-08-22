@@ -21,7 +21,7 @@
 
 (defn parse-args [argv]
   (loop [[arg & args] (drop 2 argv)
-         parsed       {}]
+         parsed {}]
     (if arg
       (recur args (parse-arg parsed arg))
       parsed)))
@@ -32,7 +32,7 @@
     {}))
 
 (defn stdin-read [opts]
-  (let [stdin   (aget js/process "stdin")
+  (let [stdin (aget js/process "stdin")
         content (atom "")]
     (.call (aget stdin "setEncoding") stdin "utf8")
     (.call (aget stdin "on") stdin "readable" (fn [] (if-let [s (.call (aget stdin "read") stdin)] (swap! content str s))))
@@ -46,9 +46,9 @@
 
 (defn -main []
   (let [parsed (parse-args (aget js/process "argv"))
-        opts   (edn-opts (get-in parsed [:opts :edn]))]
+        opts (edn-opts (get-in parsed [:opts :edn]))]
     (if-let [filename (:filename parsed)]
-      (let [file      ((aget fs "readFileSync") filename "utf8")
+      (let [file ((aget fs "readFileSync") filename "utf8")
             formatted (cljfmt/reformat-string file opts)]
         ((aget fs "writeFileSync") filename formatted "utf8"))
       (stdin-read opts))))
