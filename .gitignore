@@ -1,4 +1,3 @@
 target/
 /.lein-failures
 /.tool-versions
-/bin/cljfmt
