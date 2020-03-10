@@ -4,7 +4,8 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.10.439"]
-                 [cljfmt "0.6.3"]]
+                 [org.clojure/tools.cli "0.4.2"]
+                 [cljfmt "0.6.7"]]
 
   :plugins [[lein-cljsbuild "1.1.2"]]
 
