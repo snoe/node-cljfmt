@@ -1,3 +1,6 @@
+# Deprecated
+Check out https://gitlab.com/konrad.mrozek/cljfmt-graalvm/
+
 # node-cljfmt
 
 A small cli utility that runs https://github.com/weavejester/cljfmt on a file.
