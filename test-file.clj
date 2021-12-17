@@ -1,5 +1,7 @@
-( def test "test"
+(def test "test"
   (dom/div "abc"
-           "efg"
-           "xyz" )
-)
+    "efg"
+    "xyz"))
+
+(defcomponent foo
+  (do bar))

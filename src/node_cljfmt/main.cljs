@@ -53,4 +53,7 @@
         ((aget fs "writeFileSync") filename formatted "utf8"))
       (stdin-read opts))))
 
+;; Register #regex tag parser so we can read-string #"*." and pass it to cljfmt
+(reader/register-tag-parser! 'regex #(re-pattern %))
+
 (set! *main-cli-fn* -main)
