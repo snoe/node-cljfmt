@@ -33,15 +33,16 @@
 
 (defn stdin-read [opts]
   (let [stdin (aget js/process "stdin")
+        stdout (aget js/process "stdout")
         content (atom "")]
     (.call (aget stdin "setEncoding") stdin "utf8")
     (.call (aget stdin "on") stdin "readable" (fn [] (if-let [s (.call (aget stdin "read") stdin)] (swap! content str s))))
     (.call (aget stdin "on") stdin "end" (fn []
                                            (try
                                              (let [formatted (cljfmt/reformat-string @content opts)]
-                                               (.log js/console formatted)) s
+                                               (.write stdout formatted)) s
                                              (catch :default e
-                                               (.log js/console @content)
+                                               (.write stdout @content)
                                                (.error js/console e)))))))
 
 (defn -main []
